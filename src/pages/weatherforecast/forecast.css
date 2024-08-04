@@ -1,0 +1,22 @@
+
+.card-body{
+    border: 1px solid grey;
+    font-size: small;
+    font-family: sans-serif;
+}
+.card-title{
+    background-color: lightgray;
+    text-align: center;
+    font-size: medium;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5%;
+}
+
+.card-subtitle{
+    text-align: center;
+}
+
+.card-body ul li{
+    text-align: left;
+}

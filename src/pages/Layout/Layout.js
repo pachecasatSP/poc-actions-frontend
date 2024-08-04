@@ -11,7 +11,6 @@ const Layout = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-center" activeKey="/">
-              <Nav.Link href="/">Home</Nav.Link>
               <Nav.Link href="/weatherforecast">Weather Now!</Nav.Link>
             </Nav>
           </Navbar.Collapse>

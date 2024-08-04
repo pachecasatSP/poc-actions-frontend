@@ -1,22 +1,48 @@
 import { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import Layout from '../Layout/Layout';
+import ForecastComponent from './forecastComponent';
 
-//const [selectedDate, setDate] = useState(new Date());
+import getForecasts from './forecastmodule';
 
 const Forecast = () => {
-    return (<Form>
-        <Row className="mb-3">
-            <Form.Group as={Col} controlId="formBasicEmail">
-                <Form.Label>Date</Form.Label>
-                <Form.Control type="date" placeholder="Enter email" />
-            </Form.Group>
-        </Row>
-        <Row>
-            <Col>
-            <Button variant="primary" type="submit">Search</Button>
-            </Col>
-        </Row>
-    </Form>
+    const [wasLoaded, setLoaded] = useState(false);
+    const [forecasts, setForecasts] = useState([]);
+    const [sliderQtt, setSliderQtt] = useState(4);
+
+    const handleRefreshClick = () => {
+        getForecasts((data) => {
+            setForecasts(data);
+            setLoaded(true);
+        }, sliderQtt);
+
+
+    }
+
+    const handleOnChangeCommitted = (e, val) => {
+        if (val < sliderQtt) {
+            const newForecasts = forecasts.filter((item, index) => index < val);
+            setForecasts(newForecasts);
+        }
+        else {
+            getForecasts((data) => {
+                const newForecasts = forecasts.concat(data);
+                setForecasts(newForecasts);
+            }, val - sliderQtt);
+        }
+        setSliderQtt(val);
+    }
+
+    return (
+        <>
+            <Layout />
+            <ForecastComponent
+                source={forecasts}
+                Loaded={wasLoaded}
+                initialSliderValue={sliderQtt}
+                onChangeCommitted={(e, val) => handleOnChangeCommitted(e, val)}
+                onClick={() => handleRefreshClick()} />
+        </>
     );
+
 };
 export default Forecast;
